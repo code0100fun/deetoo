@@ -1,0 +1,8 @@
+i = 0
+while i < 10  do
+  i += 1
+  Go.send_message('count', { count: i })
+  Sleep::usleep(1_000_000)
+end
+
+Time.now.to_f
