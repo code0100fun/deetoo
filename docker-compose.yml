@@ -1,0 +1,8 @@
+---
+version: "2"
+services: 
+  compile: 
+    build: .
+    working_dir: "/go/src/github.com/hone/mrgoboto"
+    volumes: 
+      - ".:/go/src/github.com/hone/mrgoboto"
