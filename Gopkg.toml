@@ -1,3 +1,8 @@
 [prune]
   go-tests = true
   unused-packages = true
+
+[[constraint]]
+  name = "gobot.io/x/gobot"
+  branch = "r2q5"
+  source = "https://github.com/code0100fun/gobot.git"

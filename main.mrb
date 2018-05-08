@@ -1,8 +1,20 @@
-i = 0
-while i < 10  do
-  i += 1
-  Go.send_message('count', { count: i })
-  Sleep::usleep(1_000_000)
-end
+heading = 0
+direction = -1
 
-Time.now.to_f
+while true do
+  Go.dome(heading)
+  if (heading < -160)
+    heading = -160
+  elsif (heading == -160)
+    direction *= -1
+    heading += direction
+  elsif (heading > 180)
+    heading = 180
+  elsif (heading == 180)
+    direction *= -1
+    heading += direction
+  else
+    heading += direction
+  end
+  Sleep::usleep(100)
+end
