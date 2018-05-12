@@ -3,6 +3,12 @@
 
 [[projects]]
   branch = "master"
+  name = "github.com/creack/goselect"
+  packages = ["."]
+  revision = "58854f77ee8d858ce751b0a9bcc5533fef7bfa9e"
+
+[[projects]]
+  branch = "master"
   name = "github.com/go-ble/ble"
   packages = [
     ".",
@@ -73,11 +79,23 @@
   revision = "efeac611681b89806d673dfbd8fc1690ca6bd093"
 
 [[projects]]
+  branch = "master"
+  name = "go.bug.st/serial.v1"
+  packages = [
+    ".",
+    "unixutils"
+  ]
+  revision = "eae1344f9f90101f887b08d13391c34399f97873"
+
+[[projects]]
   branch = "r2q5"
   name = "gobot.io/x/gobot"
   packages = [
     ".",
     "platforms/ble",
+    "platforms/sphero",
+    "platforms/sphero/bb8",
+    "platforms/sphero/ollie",
     "platforms/sphero/r2q5"
   ]
   revision = "383e6f652452f1e9a149d4270f5b18d4ad54442c"
@@ -86,12 +104,15 @@
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
-  packages = ["unix"]
+  packages = [
+    "unix",
+    "windows"
+  ]
   revision = "6f686a352de66814cdd080d970febae7767857a3"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f489194daed1965fd1943cc9a41040babae91f0f9e032c403323c336388941bd"
+  inputs-digest = "d7255bca67c1f9ae075addd304e3eb656531db5dacc41e037e432d8b4431d1c4"
   solver-name = "gps-cdcl"
   solver-version = 1
