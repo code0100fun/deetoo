@@ -1,4 +1,4 @@
-package main
+package droids
 
 import (
 	"github.com/mitchellh/go-mruby"

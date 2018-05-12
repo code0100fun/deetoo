@@ -5,13 +5,14 @@ import (
     "fmt"
     "os"
     "sync"
-    //"time"
 
     "github.com/mitchellh/go-mruby"
 
     "gobot.io/x/gobot"
     "gobot.io/x/gobot/platforms/ble"
     "gobot.io/x/gobot/platforms/sphero/r2q5"
+
+    "github.com/hone/mrgoboto/droids"
 )
 
 func startWorker(r2q5 *r2q5.Driver, file string, wg *sync.WaitGroup) {
@@ -21,7 +22,7 @@ func startWorker(r2q5 *r2q5.Driver, file string, wg *sync.WaitGroup) {
         mrb := mruby.NewMrb()
         defer mrb.Close()
 
-	NewMrubyR2q5(r2q5, mrb)
+	droids.NewMrubyR2q5(r2q5, mrb)
 
         dat, err := ioutil.ReadFile(file)
         if err != nil {
