@@ -1,4 +1,4 @@
-droid = R2Q5.new
+droid = R2D2.new
 
 heading = 0
 direction = -1

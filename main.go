@@ -1,41 +1,41 @@
 package main
 
 import (
-    "io/ioutil"
-    "fmt"
-    "os"
-    "sync"
+	"fmt"
+	"io/ioutil"
+	"os"
+	"sync"
 
-    "github.com/mitchellh/go-mruby"
+	"github.com/mitchellh/go-mruby"
 
-    "gobot.io/x/gobot"
-    "gobot.io/x/gobot/platforms/ble"
-    "gobot.io/x/gobot/platforms/sphero/r2q5"
+	"gobot.io/x/gobot"
+	"gobot.io/x/gobot/platforms/ble"
+	"gobot.io/x/gobot/platforms/sphero/r2q5"
 
-    "github.com/hone/mrgoboto/droids"
+	"github.com/hone/mrgoboto/droids"
 )
 
 func startWorker(r2q5 *r2q5.Driver, file string, wg *sync.WaitGroup) {
-    wg.Add(1)
-    go func() {
-        defer wg.Done()
-        mrb := mruby.NewMrb()
-        defer mrb.Close()
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		mrb := mruby.NewMrb()
+		defer mrb.Close()
 
-	droids.NewMrubyR2q5(r2q5, mrb)
+		droids.NewR2D2(r2q5, mrb)
 
-        dat, err := ioutil.ReadFile(file)
-        if err != nil {
-            panic(err)
-        }
-        content := string(dat)
+		dat, err := ioutil.ReadFile(file)
+		if err != nil {
+			panic(err)
+		}
+		content := string(dat)
 
-        result, err := mrb.LoadString(content)
-        if err != nil {
-            panic(err)
-        }
-        fmt.Printf("Done: %s\n", result)
-    }()
+		result, err := mrb.LoadString(content)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Printf("Done: %s\n", result)
+	}()
 }
 
 func main() {
