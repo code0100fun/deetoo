@@ -1,4 +1,4 @@
-droid = R2D2.new
+droid = R2D2.new("D2-1F3B")
 
 heading = 0
 direction = -1

@@ -3,26 +3,22 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"os"
 	"sync"
 
 	"github.com/mitchellh/go-mruby"
 
-	"gobot.io/x/gobot"
-	"gobot.io/x/gobot/platforms/ble"
 	"gobot.io/x/gobot/platforms/sphero/r2q5"
 
 	"github.com/hone/mrgoboto/droids"
 )
 
-func startWorker(r2q5 *r2q5.Driver, file string, wg *sync.WaitGroup) {
+func startWorker(file string, droidTable map[string]*r2q5.Driver, wg *sync.WaitGroup) {
 	wg.Add(1)
 	go func() {
-		defer wg.Done()
 		mrb := mruby.NewMrb()
-		defer mrb.Close()
+		defer wg.Done()
 
-		droids.NewR2D2(r2q5, mrb)
+		droids.NewR2D2(droidTable, mrb)
 
 		dat, err := ioutil.ReadFile(file)
 		if err != nil {
@@ -34,26 +30,15 @@ func startWorker(r2q5 *r2q5.Driver, file string, wg *sync.WaitGroup) {
 		if err != nil {
 			panic(err)
 		}
+		mrb.Close()
 		fmt.Printf("Done: %s\n", result)
 	}()
 }
 
 func main() {
-	bleAdaptor := ble.NewClientAdaptor(os.Args[1])
-	r2q5 := r2q5.NewDriver(bleAdaptor)
-	defer r2q5.Sleep()
+	r2d2Table := make(map[string]*r2q5.Driver)
 
-	work := func() {
-		var wg sync.WaitGroup
-		startWorker(r2q5, "main.mrb", &wg)
-		wg.Wait()
-	}
-
-	robot := gobot.NewRobot("R2Q5",
-		[]gobot.Connection{bleAdaptor},
-		[]gobot.Device{r2q5},
-		work,
-	)
-
-	robot.Start()
+	var wg sync.WaitGroup
+	startWorker("main.mrb", r2d2Table, &wg)
+	wg.Wait()
 }
