@@ -1,16 +1,20 @@
+droid = R2Q5.new
+
 heading = 0
 direction = -1
 
 while true do
-  Go.dome(heading)
+  droid.dome(heading)
   if (heading < -160)
     heading = -160
   elsif (heading == -160)
+    droid.bipod
     direction *= -1
     heading += direction
   elsif (heading > 180)
     heading = 180
   elsif (heading == 180)
+    droid.tripod
     direction *= -1
     heading += direction
   else
