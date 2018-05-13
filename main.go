@@ -3,7 +3,10 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
+	"os/signal"
 	"sync"
+	"syscall"
 
 	"github.com/mitchellh/go-mruby"
 
@@ -16,6 +19,7 @@ func startWorker(file string, droidTable map[string]*r2q5.Driver, wg *sync.WaitG
 	wg.Add(1)
 	go func() {
 		mrb := mruby.NewMrb()
+		defer mrb.Close()
 		defer wg.Done()
 
 		droids.NewR2D2(droidTable, mrb)
@@ -26,11 +30,17 @@ func startWorker(file string, droidTable map[string]*r2q5.Driver, wg *sync.WaitG
 		}
 		content := string(dat)
 
+		c := make(chan os.Signal, 1)
+		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+		go func() {
+			<-c
+			mrb.Close()
+			wg.Done()
+		}()
 		result, err := mrb.LoadString(content)
 		if err != nil {
 			panic(err)
 		}
-		mrb.Close()
 		fmt.Printf("Done: %s\n", result)
 	}()
 }
