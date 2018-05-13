@@ -10,19 +10,23 @@ import (
 
 	"github.com/mitchellh/go-mruby"
 
+	"gobot.io/x/gobot/platforms/sphero/bb8"
 	"gobot.io/x/gobot/platforms/sphero/r2q5"
 
 	"github.com/hone/mrgoboto/droids"
 )
 
-func startWorker(file string, droidTable map[string]*r2q5.Driver, wg *sync.WaitGroup) {
+func startWorker(file string, wg *sync.WaitGroup) {
 	wg.Add(1)
 	go func() {
 		mrb := mruby.NewMrb()
 		defer mrb.Close()
-		defer wg.Done()
 
-		droids.NewR2D2(droidTable, mrb)
+		r2d2Table := make(map[string]*r2q5.Driver)
+		droids.NewR2D2(r2d2Table, mrb)
+
+		bb8Table := make(map[string]*bb8.BB8Driver)
+		droids.NewBB8(bb8Table, mrb)
 
 		dat, err := ioutil.ReadFile(file)
 		if err != nil {
@@ -30,13 +34,6 @@ func startWorker(file string, droidTable map[string]*r2q5.Driver, wg *sync.WaitG
 		}
 		content := string(dat)
 
-		c := make(chan os.Signal, 1)
-		signal.Notify(c, os.Interrupt, syscall.SIGTERM)
-		go func() {
-			<-c
-			mrb.Close()
-			wg.Done()
-		}()
 		result, err := mrb.LoadString(content)
 		if err != nil {
 			panic(err)
@@ -46,9 +43,17 @@ func startWorker(file string, droidTable map[string]*r2q5.Driver, wg *sync.WaitG
 }
 
 func main() {
-	r2d2Table := make(map[string]*r2q5.Driver)
-
 	var wg sync.WaitGroup
-	startWorker("main.mrb", r2d2Table, &wg)
+
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
+		wg.Done()
+		wg.Done()
+	}()
+
+	startWorker("main.mrb", &wg)
+	startWorker("bb8.mrb", &wg)
 	wg.Wait()
 }

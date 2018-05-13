@@ -67,7 +67,7 @@ func (droids *r2d2) Initialize(mrb *mruby.Mrb, self *mruby.MrbValue) (mruby.Valu
 		wg.Done()
 	}
 
-	robot := gobot.NewRobot("R2Q5",
+	robot := gobot.NewRobot("R2D2",
 		[]gobot.Connection{bleAdaptor},
 		[]gobot.Device{droidDriver},
 		work,

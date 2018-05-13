@@ -1,5 +1,6 @@
 def gem_config(conf)
   conf.gem :git => 'https://github.com/matsumoto-r/mruby-sleep.git'
+  conf.gem :core => 'mruby-random'
   conf.gembox 'default'
 end
 

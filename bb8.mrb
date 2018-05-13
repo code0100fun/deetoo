@@ -1,0 +1,12 @@
+droid = BB8.new("BB-1CCE")
+
+random = Random.new
+
+while true do
+  r = (random.rand * 255).to_i
+  g = (random.rand * 255).to_i
+  b = (random.rand * 255).to_i
+  puts "r: #{r}, g: #{g}, b: #{b}"
+  droid.set_rgb(r, g, b)
+  Sleep::sleep(1)
+end
