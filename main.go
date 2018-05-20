@@ -39,6 +39,12 @@ func startWorker(file string, table droidTable, wg *sync.WaitGroup) {
 		droids.NewR2D2(table.r2d2, mrb)
 		droids.NewBB8(table.bb8, mrb)
 
+		if _, err := os.Stat(file); os.IsNotExist(err) {
+			os.Stderr.WriteString(fmt.Sprintf("%s does not exist.\n", file))
+			wg.Done()
+			return
+		}
+
 		dat, err := ioutil.ReadFile(file)
 		if err != nil {
 			panic(err)
@@ -56,16 +62,20 @@ func startWorker(file string, table droidTable, wg *sync.WaitGroup) {
 func main() {
 	var wg sync.WaitGroup
 	table := NewDroidTable()
+	argsWithoutProg := os.Args[1:]
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 	go func() {
 		<-c
-		wg.Done()
-		wg.Done()
+		for _ = range argsWithoutProg {
+			wg.Done()
+		}
 	}()
 
-	startWorker("main.mrb", table, &wg)
-	startWorker("bb8.mrb", table, &wg)
+	for _, mrbFile := range argsWithoutProg {
+		startWorker(mrbFile, table, &wg)
+	}
+
 	wg.Wait()
 }
