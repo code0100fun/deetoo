@@ -39,7 +39,7 @@ end
 	return &droids
 }
 
-func (droidss *bb8) driver(mrbInstance *mruby.MrbValue) *gobotBB8.BB8Driver {
+func (droids *bb8) driver(mrbInstance *mruby.MrbValue) *gobotBB8.BB8Driver {
 	value, err := mrbInstance.Call("name")
 	var driver *gobotBB8.BB8Driver
 
@@ -47,18 +47,18 @@ func (droidss *bb8) driver(mrbInstance *mruby.MrbValue) *gobotBB8.BB8Driver {
 		panic(err.Error())
 	} else {
 		ident := string(value.String())
-		driver = droidss.table[ident]
+		driver = droids.table[ident]
 	}
 
 	return driver
 }
 
-func (droidss *bb8) Initialize(mrb *mruby.Mrb, self *mruby.MrbValue) (mruby.Value, mruby.Value) {
+func (droids *bb8) Initialize(mrb *mruby.Mrb, self *mruby.MrbValue) (mruby.Value, mruby.Value) {
 	args := mrb.GetArgs()
 	name := string(args[0].String())
 	bleAdaptor := ble.NewClientAdaptor(name)
 	droidsDriver := gobotBB8.NewDriver(bleAdaptor)
-	droidss.table[name] = droidsDriver
+	droids.table[name] = droidsDriver
 	self.Call("name=", args[0])
 
 	var wg sync.WaitGroup
