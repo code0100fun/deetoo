@@ -7,14 +7,14 @@ import (
 
 	"gobot.io/x/gobot"
 	"gobot.io/x/gobot/platforms/ble"
-	gobotR2Q5 "gobot.io/x/gobot/platforms/sphero/r2q5"
+	gobotR2D2 "gobot.io/x/gobot/platforms/sphero/r2d2"
 )
 
 type r2d2 struct {
-	table map[string]*gobotR2Q5.Driver
+	table map[string]*gobotR2D2.Driver
 }
 
-func NewR2D2(table map[string]*gobotR2Q5.Driver, mrb *mruby.Mrb) *r2d2 {
+func NewR2D2(table map[string]*gobotR2D2.Driver, mrb *mruby.Mrb) *r2d2 {
 	droids := r2d2{
 		table: table,
 	}
@@ -39,9 +39,9 @@ end
 	return &droids
 }
 
-func (droids *r2d2) driver(mrbInstance *mruby.MrbValue) *gobotR2Q5.Driver {
+func (droids *r2d2) driver(mrbInstance *mruby.MrbValue) *gobotR2D2.Driver {
 	value, err := mrbInstance.Call("name")
-	var driver *gobotR2Q5.Driver
+	var driver *gobotR2D2.Driver
 
 	if err != nil {
 		panic(err.Error())
@@ -57,7 +57,7 @@ func (droids *r2d2) Initialize(mrb *mruby.Mrb, self *mruby.MrbValue) (mruby.Valu
 	args := mrb.GetArgs()
 	name := string(args[0].String())
 	bleAdaptor := ble.NewClientAdaptor(name)
-	droidDriver := gobotR2Q5.NewDriver(bleAdaptor)
+	droidDriver := gobotR2D2.NewDriver(bleAdaptor)
 	droids.table[name] = droidDriver
 	self.Call("name=", args[0])
 

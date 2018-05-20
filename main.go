@@ -11,20 +11,20 @@ import (
 	"github.com/mitchellh/go-mruby"
 
 	"gobot.io/x/gobot/platforms/sphero/bb8"
-	"gobot.io/x/gobot/platforms/sphero/r2q5"
+	"gobot.io/x/gobot/platforms/sphero/r2d2"
 
 	"github.com/code0100fun/mrgoboto/pkg/droids"
 )
 
 type droidTable struct {
 	bb8  map[string]*bb8.BB8Driver
-	r2d2 map[string]*r2q5.Driver
+	r2d2 map[string]*r2d2.Driver
 }
 
 func NewDroidTable() droidTable {
 	table := droidTable{
 		bb8:  make(map[string]*bb8.BB8Driver),
-		r2d2: make(map[string]*r2q5.Driver),
+		r2d2: make(map[string]*r2d2.Driver),
 	}
 
 	return table

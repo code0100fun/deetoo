@@ -88,7 +88,7 @@
   revision = "eae1344f9f90101f887b08d13391c34399f97873"
 
 [[projects]]
-  branch = "r2q5"
+  branch = "r2d2"
   name = "gobot.io/x/gobot"
   packages = [
     ".",
@@ -96,10 +96,10 @@
     "platforms/sphero",
     "platforms/sphero/bb8",
     "platforms/sphero/ollie",
-    "platforms/sphero/r2q5"
+    "platforms/sphero/r2d2"
   ]
-  revision = "383e6f652452f1e9a149d4270f5b18d4ad54442c"
-  source = "https://github.com/code0100fun/gobot.git"
+  revision = "f1d40d6b874ba1b0432ae144db2c5516afe286d1"
+  source = "https://github.com/hone/gobot.git"
 
 [[projects]]
   branch = "master"
@@ -113,6 +113,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "d7255bca67c1f9ae075addd304e3eb656531db5dacc41e037e432d8b4431d1c4"
+  inputs-digest = "18576a2ee1cc29bafb65109d978426c9a40bce1afd6e20d80e69655a40255f24"
   solver-name = "gps-cdcl"
   solver-version = 1

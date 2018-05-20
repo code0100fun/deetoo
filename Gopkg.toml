@@ -4,5 +4,5 @@
 
 [[constraint]]
   name = "gobot.io/x/gobot"
-  branch = "r2q5"
-  source = "https://github.com/code0100fun/gobot.git"
+  branch = "r2d2"
+  source = "https://github.com/hone/gobot.git"
