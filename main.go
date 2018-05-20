@@ -16,17 +16,28 @@ import (
 	"github.com/code0100fun/mrgoboto/droids"
 )
 
-func startWorker(file string, wg *sync.WaitGroup) {
+type droidTable struct {
+	bb8  map[string]*bb8.BB8Driver
+	r2d2 map[string]*r2q5.Driver
+}
+
+func NewDroidTable() droidTable {
+	table := droidTable{
+		bb8:  make(map[string]*bb8.BB8Driver),
+		r2d2: make(map[string]*r2q5.Driver),
+	}
+
+	return table
+}
+
+func startWorker(file string, table droidTable, wg *sync.WaitGroup) {
 	wg.Add(1)
 	go func() {
 		mrb := mruby.NewMrb()
 		defer mrb.Close()
 
-		r2d2Table := make(map[string]*r2q5.Driver)
-		droids.NewR2D2(r2d2Table, mrb)
-
-		bb8Table := make(map[string]*bb8.BB8Driver)
-		droids.NewBB8(bb8Table, mrb)
+		droids.NewR2D2(table.r2d2, mrb)
+		droids.NewBB8(table.bb8, mrb)
 
 		dat, err := ioutil.ReadFile(file)
 		if err != nil {
@@ -44,6 +55,7 @@ func startWorker(file string, wg *sync.WaitGroup) {
 
 func main() {
 	var wg sync.WaitGroup
+	table := NewDroidTable()
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
@@ -53,7 +65,7 @@ func main() {
 		wg.Done()
 	}()
 
-	startWorker("main.mrb", &wg)
-	startWorker("bb8.mrb", &wg)
+	startWorker("main.mrb", table, &wg)
+	startWorker("bb8.mrb", table, &wg)
 	wg.Wait()
 }
