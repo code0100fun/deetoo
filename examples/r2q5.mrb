@@ -1,0 +1,13 @@
+droid = R2D2.new("Q5-8376")
+
+droid.bipod()
+
+while true do
+  Sleep::usleep(3000000)
+  droid.tripod()
+  Sleep::usleep(3000000)
+  droid.move(30, 0)
+  Sleep::usleep(3000000)
+  droid.bipod()
+  Sleep::usleep(3000000)
+end

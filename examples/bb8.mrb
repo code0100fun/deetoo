@@ -1,4 +1,4 @@
-droid = BB8.new("BB-1CCE")
+droid = BB8.new("GB-A9F1")
 
 random = Random.new
 
