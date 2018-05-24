@@ -7,6 +7,7 @@ import (
 	"os/signal"
 	"sync"
 	"syscall"
+	"time"
 
 	"github.com/mitchellh/go-mruby"
 
@@ -59,6 +60,15 @@ func startWorker(file string, table droidTable, wg *sync.WaitGroup) {
 	}()
 }
 
+func sleepAllDroids(table droidTable) {
+	for _, droid := range table.r2d2 {
+		droid.Sleep()
+	}
+	for _, droid := range table.bb8 {
+		droid.Sleep()
+	}
+}
+
 func main() {
 	var wg sync.WaitGroup
 	table := NewDroidTable()
@@ -69,6 +79,8 @@ func main() {
 	go func() {
 		<-c
 		for _ = range argsWithoutProg {
+			sleepAllDroids(table)
+			time.Sleep(3 * time.Second)
 			wg.Done()
 		}
 	}()
