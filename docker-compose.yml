@@ -3,6 +3,6 @@ version: "2"
 services: 
   compile: 
     build: .
-    working_dir: "/go/src/github.com/code0100fun/mrgoboto"
+    working_dir: "/go/src/github.com/code0100fun/deetoo"
     volumes: 
-      - ".:/go/src/github.com/code0100fun/mrgoboto"
+      - ".:/go/src/github.com/code0100fun/deetoo"

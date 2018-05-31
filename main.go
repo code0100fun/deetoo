@@ -14,7 +14,7 @@ import (
 	"gobot.io/x/gobot/platforms/sphero/bb8"
 	"gobot.io/x/gobot/platforms/sphero/r2d2"
 
-	"github.com/code0100fun/mrgoboto/pkg/droids"
+	"github.com/code0100fun/deetoo/pkg/droids"
 )
 
 type droidTable struct {

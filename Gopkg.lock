@@ -98,7 +98,7 @@
     "platforms/sphero/ollie",
     "platforms/sphero/r2d2"
   ]
-  revision = "f1d40d6b874ba1b0432ae144db2c5516afe286d1"
+  revision = "96e9e8e822c12c812a764097e2c348f6c97a3545"
   source = "https://github.com/hone/gobot.git"
 
 [[projects]]
