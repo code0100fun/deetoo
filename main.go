@@ -57,6 +57,7 @@ func startWorker(file string, table droidTable, wg *sync.WaitGroup) {
 			panic(err)
 		}
 		fmt.Printf("Done: %s\n", result)
+		cleanup(table, wg)
 	}()
 }
 
@@ -69,6 +70,12 @@ func sleepAllDroids(table droidTable) {
 	}
 }
 
+func cleanup(table droidTable, wg *sync.WaitGroup) {
+	sleepAllDroids(table)
+	time.Sleep(3 * time.Second)
+	wg.Done()
+}
+
 func main() {
 	var wg sync.WaitGroup
 	table := NewDroidTable()
@@ -79,9 +86,7 @@ func main() {
 	go func() {
 		<-c
 		for _ = range argsWithoutProg {
-			sleepAllDroids(table)
-			time.Sleep(3 * time.Second)
-			wg.Done()
+			cleanup(table, &wg)
 		}
 	}()
 
