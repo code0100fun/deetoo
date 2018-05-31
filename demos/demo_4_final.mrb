@@ -1,0 +1,66 @@
+r2 = R2D2.new("D2-1F3B")
+q5 = R2D2.new("Q5-8376")
+
+heading = 0; direction = -5
+t = 0
+
+r2.bipod
+q5.bipod
+r2.dome(0)
+q5.dome(0)
+
+Sleep::usleep(2000 * 1000)
+
+r2.tripod
+q5.tripod
+
+Sleep::usleep(2000 * 1000)
+
+r2.move(50, 0)
+q5.move(50, 0)
+
+Sleep::usleep(4000 * 1000)
+
+r2.move(0, 0)
+q5.move(0, 0)
+
+Sleep::usleep(1000 * 1000)
+
+while t < 2 do
+  r2.dome(heading)
+  q5.dome(-heading)
+
+  direction = -1 if heading >= 160
+  direction = 1 if heading <= -160
+
+  t = t + 1 if heading/(heading+direction) < 0
+  puts t
+
+  heading = heading + direction
+
+  Sleep::usleep(20 * 1000)
+end
+
+Sleep::usleep(1000 * 1000)
+
+r2.dome(0)
+q5.dome(0)
+
+Sleep::usleep(2000 * 1000)
+
+r2.move(50, 180)
+q5.move(50, 180)
+
+Sleep::usleep(5000 * 1000)
+
+r2.move(0, 0)
+q5.move(0, 0)
+
+Sleep::usleep(1000 * 1000)
+
+r2.bipod
+q5.bipod
+r2.dome(0)
+q5.dome(0)
+
+Sleep::usleep(2000 * 1000)

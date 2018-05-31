@@ -1,0 +1,9 @@
+droid = R2D2.new("D2-1F3B")
+heading = 0; direction = -1
+while true do
+  droid.dome(heading)
+  direction = -1 if heading >= 180
+  direction = 1 if heading <= -160
+  heading = heading + direction
+  Sleep::usleep(1000)
+end
